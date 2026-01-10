@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from "react";
 import Lenis from "@studio-freight/lenis";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import AboutSection from "@/components/AboutSection";
 import WorkSection from "@/components/WorkSection";
 import SkillsMarquee from "@/components/SkillsMarquee";
 import ContactSection from "@/components/ContactSection";
@@ -37,7 +38,7 @@ const Index = () => {
   const scrollTo = useCallback((target: string) => {
     const element = document.getElementById(target);
     if (element && lenisRef.current) {
-      lenisRef.current.scrollTo(element);
+      lenisRef.current.scrollTo(element, { offset: -80 });
     }
   }, []);
 
@@ -48,6 +49,7 @@ const Index = () => {
       
       <main>
         <Hero onScrollTo={scrollTo} />
+        <AboutSection />
         <WorkSection />
         <SkillsMarquee />
         <ContactSection />

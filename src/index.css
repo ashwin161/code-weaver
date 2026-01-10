@@ -4,49 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 88%;
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
     
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 88%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
     
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 88%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
     
-    --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 2%;
+    --primary: 250 89% 62%;
+    --primary-foreground: 0 0% 100%;
     
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 88%;
+    --secondary: 240 5% 92%;
+    --secondary-foreground: 240 10% 10%;
     
-    --muted: 0 0% 10%;
-    --muted-foreground: 240 4% 66%;
+    --muted: 240 5% 92%;
+    --muted-foreground: 240 4% 46%;
     
-    --accent: 270 91% 65%;
+    --accent: 280 85% 60%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 239 84% 67%;
+    --border: 240 6% 85%;
+    --input: 240 6% 85%;
+    --ring: 250 89% 62%;
     
     --radius: 1rem;
     
-    /* Custom tokens */
-    --glass: 0 0% 100% / 0.03;
-    --glass-border: 0 0% 100% / 0.08;
-    --accent-glow: 239 84% 74%;
+    --glass: 240 10% 10% / 0.03;
+    --glass-border: 240 10% 10% / 0.08;
+    --accent-glow: 250 89% 70%;
     
-    --sidebar-background: 0 0% 6%;
-    --sidebar-foreground: 0 0% 88%;
-    --sidebar-primary: 239 84% 67%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 10% 10%;
+    --sidebar-primary: 250 89% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 88%;
-    --sidebar-border: 0 0% 14%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-accent: 240 5% 92%;
+    --sidebar-accent-foreground: 240 10% 10%;
+    --sidebar-border: 240 6% 85%;
+    --sidebar-ring: 250 89% 62%;
   }
 
   .dark {
@@ -59,8 +58,8 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 88%;
     
-    --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 2%;
+    --primary: 250 89% 62%;
+    --primary-foreground: 0 0% 100%;
     
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 88%;
@@ -68,7 +67,7 @@
     --muted: 0 0% 10%;
     --muted-foreground: 240 4% 66%;
     
-    --accent: 270 91% 65%;
+    --accent: 280 85% 60%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 62.8% 30.6%;
@@ -76,20 +75,20 @@
     
     --border: 0 0% 14%;
     --input: 0 0% 14%;
-    --ring: 239 84% 67%;
+    --ring: 250 89% 62%;
     
     --glass: 0 0% 100% / 0.03;
     --glass-border: 0 0% 100% / 0.08;
-    --accent-glow: 239 84% 74%;
+    --accent-glow: 250 89% 70%;
     
     --sidebar-background: 0 0% 6%;
     --sidebar-foreground: 0 0% 88%;
-    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary: 250 89% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 10%;
     --sidebar-accent-foreground: 0 0% 88%;
     --sidebar-border: 0 0% 14%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-ring: 250 89% 62%;
   }
 }
 
@@ -110,7 +109,7 @@
   
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
-    @apply text-white;
+    @apply text-foreground;
   }
 }
 
@@ -141,11 +140,24 @@
     pointer-events: none;
   }
   
+  .ambient-light-2 {
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.12) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    animation: pulse 12s infinite alternate-reverse;
+    pointer-events: none;
+  }
+  
   .cursor-glow {
     position: fixed;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, hsl(var(--accent) / 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--primary) / 0.1) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -175,7 +187,20 @@
     }
   }
   
+  @keyframes spin-slow {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
   .animate-marquee {
     animation: marquee 20s linear infinite;
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
   }
 }
