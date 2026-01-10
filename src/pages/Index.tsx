@@ -1,12 +1,59 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useRef, useCallback } from "react";
+import Lenis from "@studio-freight/lenis";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import WorkSection from "@/components/WorkSection";
+import SkillsMarquee from "@/components/SkillsMarquee";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
+import CursorGlow from "@/components/CursorGlow";
 
 const Index = () => {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+    });
+
+    lenisRef.current = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  const scrollTo = useCallback((target: string) => {
+    const element = document.getElementById(target);
+    if (element && lenisRef.current) {
+      lenisRef.current.scrollTo(element);
+    }
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <CursorGlow />
+      <Header onScrollTo={scrollTo} />
+      
+      <main>
+        <Hero onScrollTo={scrollTo} />
+        <WorkSection />
+        <SkillsMarquee />
+        <ContactSection />
+      </main>
+      
+      <Footer />
     </div>
   );
 };
