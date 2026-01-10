@@ -23,6 +23,7 @@ const CursorGlow = () => {
   return (
     <>
       <div className="ambient-light" />
+      <div className="ambient-light-2" />
       <div ref={glowRef} className="cursor-glow" />
     </>
   );
