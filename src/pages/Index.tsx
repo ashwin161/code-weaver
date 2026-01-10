@@ -7,46 +7,28 @@ import WorkSection from "@/components/WorkSection";
 import SkillsMarquee from "@/components/SkillsMarquee";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import CursorGlow from "@/components/CursorGlow";
+import ParticlesBackground from "@/components/ParticlesBackground";
 
 const Index = () => {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-    });
-
+    const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
     lenisRef.current = lenis;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
+    const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
+    return () => lenis.destroy();
   }, []);
 
   const scrollTo = useCallback((target: string) => {
-    const element = document.getElementById(target);
-    if (element && lenisRef.current) {
-      lenisRef.current.scrollTo(element, { offset: -80 });
-    }
+    const el = document.getElementById(target);
+    if (el && lenisRef.current) lenisRef.current.scrollTo(el, { offset: -80 });
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      <CursorGlow />
+      <ParticlesBackground />
       <Header onScrollTo={scrollTo} />
-      
       <main>
         <Hero onScrollTo={scrollTo} />
         <AboutSection />
@@ -54,7 +36,6 @@ const Index = () => {
         <SkillsMarquee />
         <ContactSection />
       </main>
-      
       <Footer />
     </div>
   );
