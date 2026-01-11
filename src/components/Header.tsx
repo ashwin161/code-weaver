@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
+import AnimatedLogo from "./AnimatedLogo";
 
 interface HeaderProps {
   onScrollTo: (target: string) => void;
@@ -28,10 +29,8 @@ const Header = ({ onScrollTo }: HeaderProps) => {
   };
 
   return (
-    <header className="fixed top-0 w-full px-6 md:px-12 py-6 flex justify-between items-center z-50 backdrop-blur-md bg-background/80">
-      <div className="text-2xl font-bold font-display tracking-tight">
-        YN<span className="text-primary">.</span>
-      </div>
+    <header className="fixed top-0 w-full px-6 md:px-12 py-6 flex justify-between items-center z-50 backdrop-blur-md bg-background/80 border-b border-border/50">
+      <AnimatedLogo />
       
       <nav className="flex items-center gap-4 md:gap-8">
         <button 
