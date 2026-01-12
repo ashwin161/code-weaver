@@ -13,6 +13,8 @@ interface Project {
   tags: string[];
   gradient: string;
   category: Category;
+  link?: string;
+  previewImage?: string;
 }
 
 const projects: Project[] = [
@@ -22,6 +24,7 @@ const projects: Project[] = [
     tags: ["React", "Three.js", "GSAP"],
     gradient: "linear-gradient(135deg, hsl(250, 89%, 62%) 0%, hsl(280, 85%, 60%) 100%)",
     category: "projects",
+    link: "https://example.com/cyber-finance",
   },
   {
     title: "Neon VR",
@@ -29,6 +32,7 @@ const projects: Project[] = [
     tags: ["Unity", "C#", "WebGL"],
     gradient: "linear-gradient(135deg, hsl(200, 100%, 50%) 0%, hsl(250, 89%, 62%) 100%)",
     category: "projects",
+    link: "https://example.com/neon-vr",
   },
   {
     title: "Agency Portfolio",
@@ -36,6 +40,7 @@ const projects: Project[] = [
     tags: ["HTML", "SCSS", "Lenis"],
     gradient: "linear-gradient(135deg, hsl(280, 85%, 60%) 0%, hsl(320, 70%, 50%) 100%)",
     category: "projects",
+    link: "https://example.com/agency-portfolio",
   },
   {
     title: "Tech Corp Internship",
@@ -43,6 +48,7 @@ const projects: Project[] = [
     tags: ["Node.js", "React", "PostgreSQL"],
     gradient: "linear-gradient(135deg, hsl(170, 80%, 45%) 0%, hsl(200, 90%, 50%) 100%)",
     category: "internships",
+    link: "https://example.com/tech-corp",
   },
   {
     title: "AR Startup Internship",
@@ -50,6 +56,7 @@ const projects: Project[] = [
     tags: ["ARKit", "Swift", "Unity"],
     gradient: "linear-gradient(135deg, hsl(40, 95%, 55%) 0%, hsl(20, 90%, 55%) 100%)",
     category: "internships",
+    link: "https://example.com/ar-startup",
   },
   {
     title: "WebGL Workshop",
@@ -57,6 +64,7 @@ const projects: Project[] = [
     tags: ["WebGL", "Three.js", "Shaders"],
     gradient: "linear-gradient(135deg, hsl(300, 70%, 50%) 0%, hsl(340, 80%, 55%) 100%)",
     category: "workshops",
+    link: "https://example.com/webgl-workshop",
   },
   {
     title: "Motion Design Workshop",
@@ -64,6 +72,7 @@ const projects: Project[] = [
     tags: ["GSAP", "Framer Motion", "CSS"],
     gradient: "linear-gradient(135deg, hsl(220, 90%, 55%) 0%, hsl(260, 85%, 60%) 100%)",
     category: "workshops",
+    link: "https://example.com/motion-workshop",
   },
 ];
 
@@ -107,7 +116,7 @@ const WorkSection = () => {
     >
       <div className="mb-12 work-header">
         <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">Selected Works</h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full mb-8" />
+        <div className="w-24 h-1 bg-foreground/30 rounded-full mb-8" />
         
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-3">
@@ -126,9 +135,9 @@ const WorkSection = () => {
             >
               {/* Animated background on hover */}
               <span className={`
-                absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0 
+                absolute inset-0 bg-foreground opacity-0 
                 transition-opacity duration-300
-                ${activeCategory !== key ? "group-hover:opacity-10" : ""}
+                ${activeCategory !== key ? "group-hover:opacity-5" : ""}
               `} />
               <span className="relative z-10">{label}</span>
               
