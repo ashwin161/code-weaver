@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 
@@ -12,6 +12,7 @@ const Hero = ({ onScrollTo }: HeroProps) => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,6 +60,17 @@ const Hero = ({ onScrollTo }: HeroProps) => {
     return () => ctx.revert();
   }, []);
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <section 
       ref={heroRef}
@@ -99,63 +111,79 @@ const Hero = ({ onScrollTo }: HeroProps) => {
         </div>
       </div>
 
-      {/* Photo Frame with Geometric Effect */}
+      {/* Photo Frame with Prism Effect */}
       <div ref={photoRef} className="relative group">
-        {/* Animated geometric shapes */}
-        <div className="absolute -inset-8 flex items-center justify-center">
+        {/* Orbiting rings */}
+        <div className="absolute -inset-10 flex items-center justify-center pointer-events-none">
           <div 
-            className="absolute w-72 h-72 md:w-96 md:h-96 border-2 border-primary/20 rounded-3xl animate-[spin_20s_linear_infinite]"
-            style={{ transform: "rotate(45deg)" }}
-          />
+            className="absolute w-[340px] h-[340px] md:w-[420px] md:h-[420px] rounded-full border border-dashed border-primary/20"
+            style={{ animation: "spin 30s linear infinite" }}
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-lg shadow-primary/50" />
+          </div>
           <div 
-            className="absolute w-64 h-64 md:w-80 md:h-80 border-2 border-accent/20 rounded-3xl animate-[spin_15s_linear_infinite_reverse]"
-            style={{ transform: "rotate(30deg)" }}
-          />
-          <div 
-            className="absolute w-56 h-56 md:w-72 md:h-72 border border-primary/10 rounded-full animate-[spin_25s_linear_infinite]"
-          />
+            className="absolute w-[300px] h-[300px] md:w-[380px] md:h-[380px] rounded-full border border-accent/15"
+            style={{ animation: "spin 20s linear infinite reverse" }}
+          >
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-accent rounded-full shadow-lg shadow-accent/50" />
+          </div>
         </div>
 
-        {/* Floating particles around photo */}
-        <div className="absolute -inset-6">
-          <div className="absolute top-0 left-1/2 w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0s", animationDuration: "2s" }} />
-          <div className="absolute top-1/4 right-0 w-1.5 h-1.5 bg-accent rounded-full animate-bounce" style={{ animationDelay: "0.5s", animationDuration: "2.5s" }} />
-          <div className="absolute bottom-0 left-1/3 w-2 h-2 bg-primary/70 rounded-full animate-bounce" style={{ animationDelay: "1s", animationDuration: "2.2s" }} />
-          <div className="absolute bottom-1/4 left-0 w-1 h-1 bg-accent/70 rounded-full animate-bounce" style={{ animationDelay: "1.5s", animationDuration: "2.8s" }} />
+        {/* Prism background effect */}
+        <div className="absolute -inset-4 opacity-70 group-hover:opacity-100 transition-all duration-700">
+          <div 
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: "conic-gradient(from 180deg at 50% 50%, hsl(var(--primary) / 0.3) 0deg, hsl(var(--accent) / 0.2) 120deg, hsl(200 100% 50% / 0.2) 240deg, hsl(var(--primary) / 0.3) 360deg)",
+              filter: "blur(30px)",
+              animation: "spin 8s linear infinite",
+            }}
+          />
         </div>
         
-        {/* Hexagonal frame effect */}
-        <div 
-          className="absolute -inset-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background: "conic-gradient(from 0deg, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.3), hsl(var(--primary) / 0.3))",
-            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-            animation: "spin 12s linear infinite",
-          }}
-        />
-        
         {/* Photo container */}
-        <div className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden shadow-2xl group-hover:shadow-primary/20 transition-shadow duration-500"
-          style={{
-            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-          }}
-        >
-          <div className="absolute inset-1 bg-background"
-            style={{
-              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-            }}
-          >
-            <div className="w-full h-full bg-gradient-to-br from-secondary via-muted to-secondary flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-foreground/5 flex items-center justify-center backdrop-blur-sm border border-foreground/10 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-10 h-10 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl group-hover:shadow-primary/30 transition-all duration-500 border-4 border-background">
+          {/* Inner glow ring */}
+          <div className="absolute inset-0 rounded-full border-4 border-primary/20 group-hover:border-primary/40 transition-colors duration-500 z-10 pointer-events-none" />
+          
+          {uploadedImage ? (
+            <img 
+              src={uploadedImage} 
+              alt="Profile" 
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+          ) : (
+            <label className="w-full h-full bg-gradient-to-br from-secondary via-muted to-secondary flex items-center justify-center cursor-pointer hover:from-secondary/80 hover:to-secondary/80 transition-all duration-300">
+              <div className="text-center p-4">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-foreground/5 flex items-center justify-center backdrop-blur-sm border border-foreground/10 group-hover:scale-110 group-hover:border-primary/30 transition-all duration-300">
+                  <svg className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <p className="text-sm text-muted-foreground font-medium">Your Photo Here</p>
+                <p className="text-sm text-muted-foreground font-medium group-hover:text-foreground transition-colors duration-300">
+                  Click to Upload Photo
+                </p>
               </div>
-            </div>
-          </div>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </label>
+          )}
+        </div>
+
+        {/* Floating accent elements */}
+        <div className="absolute -top-6 -right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-300">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+        </div>
+        <div className="absolute -bottom-4 -left-4 w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform duration-300" style={{ animationDelay: "0.2s" }}>
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
         </div>
       </div>
     </section>
