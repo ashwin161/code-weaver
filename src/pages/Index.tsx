@@ -8,7 +8,7 @@ import SkillsMarquee from "@/components/SkillsMarquee";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CursorGlow from "@/components/CursorGlow";
-import LineDrawingBackground from "@/components/LineDrawingBackground";
+
 
 const Index = () => {
   const lenisRef = useRef<Lenis | null>(null);
@@ -45,7 +45,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <LineDrawingBackground />
+      
       <CursorGlow />
       <Header onScrollTo={scrollTo} />
       
