@@ -102,9 +102,19 @@
   }
   
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply text-foreground overflow-x-hidden;
+    background: hsl(var(--background));
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
+  }
+  
+  #tsparticles {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0 !important;
   }
   
   h1, h2, h3, h4, h5, h6 {

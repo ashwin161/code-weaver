@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { ISourceOptions } from "@tsparticles/engine";
@@ -14,11 +14,17 @@ const ParticlesBackground = () => {
     });
   }, []);
 
-  const options: ISourceOptions = {
+  const options: ISourceOptions = useMemo(() => ({
     fullScreen: {
       enable: true,
-      zIndex: -1,
+      zIndex: 0,
     },
+    background: {
+      color: {
+        value: "transparent",
+      },
+    },
+    fpsLimit: 120,
     particles: {
       number: {
         value: 80,
@@ -29,22 +35,22 @@ const ParticlesBackground = () => {
         },
       },
       color: {
-        value: "hsl(var(--primary))",
+        value: "#6366f1",
       },
       shape: {
         type: "circle",
       },
       opacity: {
-        value: 0.5,
+        value: 0.6,
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 1, max: 4 },
       },
       links: {
         enable: true,
         distance: 150,
-        color: "hsl(var(--foreground))",
-        opacity: 0.2,
+        color: "#a5b4fc",
+        opacity: 0.4,
         width: 1,
       },
       move: {
@@ -59,17 +65,30 @@ const ParticlesBackground = () => {
       },
     },
     interactivity: {
-      detectsOn: "canvas",
+      detectsOn: "window",
       events: {
         onHover: {
           enable: true,
-          mode: "bubble",
+          mode: "grab",
+        },
+        onClick: {
+          enable: true,
+          mode: "push",
         },
         resize: {
           enable: true,
         },
       },
       modes: {
+        grab: {
+          distance: 200,
+          links: {
+            opacity: 0.8,
+          },
+        },
+        push: {
+          quantity: 4,
+        },
         bubble: {
           distance: 400,
           size: 40,
@@ -80,11 +99,17 @@ const ParticlesBackground = () => {
       },
     },
     detectRetina: true,
-  };
+  }), []);
 
   if (!init) return null;
 
-  return <Particles id="tsparticles" options={options} />;
+  return (
+    <Particles
+      id="tsparticles"
+      options={options}
+      className="fixed inset-0 pointer-events-auto"
+    />
+  );
 };
 
 export default ParticlesBackground;
