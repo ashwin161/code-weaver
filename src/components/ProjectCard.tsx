@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -8,15 +9,16 @@ interface ProjectCardProps {
   title: string;
   description: string;
   tags: string[];
-  gradient: string;
+  image?: string;
+  slug: string;
 }
 
-const ProjectCard = ({ title, description, tags, gradient }: ProjectCardProps) => {
+const ProjectCard = ({ title, description, tags, image, slug }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -52,12 +54,6 @@ const ProjectCard = ({ title, description, tags, gradient }: ProjectCardProps) =
         ease: "power2.out",
       });
     }
-    if (overlayRef.current) {
-      gsap.to(overlayRef.current, {
-        opacity: 1,
-        duration: 0.3,
-      });
-    }
   };
 
   const handleMouseLeave = () => {
@@ -69,12 +65,10 @@ const ProjectCard = ({ title, description, tags, gradient }: ProjectCardProps) =
         ease: "power2.out",
       });
     }
-    if (overlayRef.current) {
-      gsap.to(overlayRef.current, {
-        opacity: 0,
-        duration: 0.3,
-      });
-    }
+  };
+
+  const handleClick = () => {
+    navigate(`/project/${slug}`);
   };
 
   return (
@@ -83,6 +77,7 @@ const ProjectCard = ({ title, description, tags, gradient }: ProjectCardProps) =
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className="relative bg-card border border-border rounded-3xl overflow-hidden group cursor-pointer"
       style={{
         transform: isHovered 
@@ -95,23 +90,34 @@ const ProjectCard = ({ title, description, tags, gradient }: ProjectCardProps) =
       <div className="h-64 relative overflow-hidden">
         <div 
           ref={imageRef}
-          className="absolute inset-0"
-          style={{ background: gradient }}
-        />
+          className="absolute inset-0 bg-secondary/30 flex items-center justify-center"
+        >
+          {image ? (
+            <img 
+              src={image} 
+              alt={title} 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="text-muted-foreground text-sm border-2 border-dashed border-border rounded-xl p-6">
+              Project image
+            </div>
+          )}
+        </div>
         
         {/* Animated border lines on hover */}
         <div className="absolute inset-0 overflow-hidden">
           <div 
-            className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+            className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-foreground/50 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
           />
           <div 
-            className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent transform translate-x-full group-hover:-translate-x-full transition-transform duration-1000 delay-200"
+            className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-foreground/50 to-transparent transform translate-x-full group-hover:-translate-x-full transition-transform duration-1000 delay-200"
           />
           <div 
-            className="absolute left-0 top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-white/50 to-transparent transform -translate-y-full group-hover:translate-y-full transition-transform duration-1000 delay-100"
+            className="absolute left-0 top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-foreground/50 to-transparent transform -translate-y-full group-hover:translate-y-full transition-transform duration-1000 delay-100"
           />
           <div 
-            className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-white/50 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-300"
+            className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-foreground/50 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-300"
           />
         </div>
       </div>

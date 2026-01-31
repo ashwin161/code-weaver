@@ -11,8 +11,9 @@ interface Project {
   title: string;
   description: string;
   tags: string[];
-  gradient: string;
+  image?: string;
   category: Category;
+  slug: string;
 }
 
 const projects: Project[] = [
@@ -20,50 +21,57 @@ const projects: Project[] = [
     title: "Cyber Finance",
     description: "Web3 Dashboard with real-time data visualization.",
     tags: ["React", "Three.js", "GSAP"],
-    gradient: "linear-gradient(135deg, hsl(250, 89%, 62%) 0%, hsl(280, 85%, 60%) 100%)",
+    image: "",
     category: "projects",
+    slug: "cyber-finance",
   },
   {
     title: "Neon VR",
     description: "Immersive virtual reality environment for brand storytelling.",
     tags: ["Unity", "C#", "WebGL"],
-    gradient: "linear-gradient(135deg, hsl(200, 100%, 50%) 0%, hsl(250, 89%, 62%) 100%)",
+    image: "",
     category: "projects",
+    slug: "neon-vr",
   },
   {
     title: "Agency Portfolio",
     description: "High-performance aesthetic website for a digital agency.",
     tags: ["HTML", "SCSS", "Lenis"],
-    gradient: "linear-gradient(135deg, hsl(280, 85%, 60%) 0%, hsl(320, 70%, 50%) 100%)",
+    image: "",
     category: "projects",
+    slug: "agency-portfolio",
   },
   {
     title: "Tech Corp Internship",
     description: "Full-stack development internship building enterprise solutions.",
     tags: ["Node.js", "React", "PostgreSQL"],
-    gradient: "linear-gradient(135deg, hsl(170, 80%, 45%) 0%, hsl(200, 90%, 50%) 100%)",
+    image: "",
     category: "internships",
+    slug: "tech-corp-internship",
   },
   {
     title: "AR Startup Internship",
     description: "Developed augmented reality features for mobile applications.",
     tags: ["ARKit", "Swift", "Unity"],
-    gradient: "linear-gradient(135deg, hsl(40, 95%, 55%) 0%, hsl(20, 90%, 55%) 100%)",
+    image: "",
     category: "internships",
+    slug: "ar-startup-internship",
   },
   {
     title: "WebGL Workshop",
     description: "Conducted hands-on workshop on 3D graphics for the web.",
     tags: ["WebGL", "Three.js", "Shaders"],
-    gradient: "linear-gradient(135deg, hsl(300, 70%, 50%) 0%, hsl(340, 80%, 55%) 100%)",
+    image: "",
     category: "workshops",
+    slug: "webgl-workshop",
   },
   {
     title: "Motion Design Workshop",
     description: "Led creative sessions on UI animation principles and GSAP.",
     tags: ["GSAP", "Framer Motion", "CSS"],
-    gradient: "linear-gradient(135deg, hsl(220, 90%, 55%) 0%, hsl(260, 85%, 60%) 100%)",
+    image: "",
     category: "workshops",
+    slug: "motion-design-workshop",
   },
 ];
 
@@ -149,7 +157,14 @@ const WorkSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.map((project) => (
-          <ProjectCard key={project.title} {...project} />
+          <ProjectCard 
+            key={project.slug} 
+            title={project.title}
+            description={project.description}
+            tags={project.tags}
+            image={project.image}
+            slug={project.slug}
+          />
         ))}
       </div>
     </section>
