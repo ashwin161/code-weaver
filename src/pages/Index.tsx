@@ -44,21 +44,23 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <ParticlesBackground />
-      <CursorGlow />
-      <Header onScrollTo={scrollTo} />
-      
-      <main>
-        <Hero onScrollTo={scrollTo} />
-        <AboutSection />
-        <WorkSection />
-        <SkillsMarquee />
-        <ContactSection />
-      </main>
-      
-      <Footer />
-    </div>
+      <div className="min-h-screen bg-transparent relative z-10">
+        <CursorGlow />
+        <Header onScrollTo={scrollTo} />
+        
+        <main>
+          <Hero onScrollTo={scrollTo} />
+          <AboutSection />
+          <WorkSection />
+          <SkillsMarquee />
+          <ContactSection />
+        </main>
+        
+        <Footer />
+      </div>
+    </>
   );
 };
 
