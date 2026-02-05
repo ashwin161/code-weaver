@@ -1,7 +1,7 @@
  import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
-import GlassMorphismCard from "./GlassMorphismCard";
+ import AnimatedPhotoFrame from "./AnimatedPhotoFrame";
  import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeroProps {
@@ -117,48 +117,7 @@ const Hero = ({ onScrollTo }: HeroProps) => {
 
       {/* Glass Morphism Card with Photo Upload */}
        <div ref={cardRef} className={`relative group ${isMobile ? 'opacity-100' : ''}`}>
-        {/* Orbiting rings */}
-         <div className={`absolute -inset-10 flex items-center justify-center pointer-events-none ${isMobile ? 'hidden' : ''}`}>
-          <div 
-            className="absolute w-[380px] h-[380px] md:w-[460px] md:h-[460px] rounded-full border border-dashed border-primary/20"
-            style={{ animation: "spin 30s linear infinite" }}
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-lg shadow-primary/50" />
-          </div>
-          <div 
-            className="absolute w-[340px] h-[340px] md:w-[420px] md:h-[420px] rounded-full border border-accent/15"
-            style={{ animation: "spin 20s linear infinite reverse" }}
-          >
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-accent rounded-full shadow-lg shadow-accent/50" />
-          </div>
-        </div>
-
-         {/* Prism background effect - hidden on mobile */}
-         <div className={`absolute -inset-4 opacity-70 group-hover:opacity-100 transition-all duration-700 ${isMobile ? 'hidden' : ''}`}>
-          <div 
-            className="absolute inset-0 rounded-3xl"
-            style={{
-              background: "conic-gradient(from 180deg at 50% 50%, hsl(var(--primary) / 0.3) 0deg, hsl(var(--accent) / 0.2) 120deg, hsl(200 100% 50% / 0.2) 240deg, hsl(var(--primary) / 0.3) 360deg)",
-              filter: "blur(40px)",
-              animation: "spin 8s linear infinite",
-            }}
-          />
-        </div>
-
-         {/* Static Glass Morphism Card Component */}
-         <GlassMorphismCard />
-
-         {/* Floating accent elements - simplified on mobile */}
-         <div className={`absolute -top-6 -right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 z-30 ${isMobile ? '' : 'group-hover:scale-110 transition-transform duration-500'}`}>
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
-        </div>
-         <div className={`absolute -bottom-4 -left-4 w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg shadow-accent/30 z-30 ${isMobile ? '' : 'group-hover:scale-110 transition-transform duration-500'}`}>
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
+         <AnimatedPhotoFrame variant="futuristic" />
       </div>
     </section>
   );
