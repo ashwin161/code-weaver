@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import GlassMorphismCard from "./GlassMorphismCard";
+ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeroProps {
   onScrollTo: (target: string) => void;
@@ -13,9 +14,22 @@ const Hero = ({ onScrollTo }: HeroProps) => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+   const isMobile = useIsMobile();
 
   useEffect(() => {
+     // Simplified animations for mobile
+     if (isMobile) {
+       // Simple fade-in for mobile without complex GSAP animations
+       const elements = [titleRef.current, subtitleRef.current, actionsRef.current, cardRef.current];
+       elements.forEach((el) => {
+         if (el) {
+           el.style.opacity = '1';
+           el.style.transform = 'none';
+         }
+       });
+       return;
+     }
+ 
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current, {
         y: 100,
@@ -48,7 +62,7 @@ const Hero = ({ onScrollTo }: HeroProps) => {
         ease: "back.out(1.7)",
       });
 
-      // Floating animation for card
+       // Floating animation for card (desktop only)
       gsap.to(cardRef.current, {
         y: -15,
         duration: 2,
@@ -59,18 +73,7 @@ const Hero = ({ onScrollTo }: HeroProps) => {
     }, heroRef);
 
     return () => ctx.revert();
-  }, []);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setUploadedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+   }, [isMobile]);
 
   return (
     <section 
@@ -113,9 +116,9 @@ const Hero = ({ onScrollTo }: HeroProps) => {
       </div>
 
       {/* Glass Morphism Card with Photo Upload */}
-      <div ref={cardRef} className="relative group">
+       <div ref={cardRef} className={`relative group ${isMobile ? 'opacity-100' : ''}`}>
         {/* Orbiting rings */}
-        <div className="absolute -inset-10 flex items-center justify-center pointer-events-none">
+         <div className={`absolute -inset-10 flex items-center justify-center pointer-events-none ${isMobile ? 'hidden' : ''}`}>
           <div 
             className="absolute w-[380px] h-[380px] md:w-[460px] md:h-[460px] rounded-full border border-dashed border-primary/20"
             style={{ animation: "spin 30s linear infinite" }}
@@ -130,8 +133,8 @@ const Hero = ({ onScrollTo }: HeroProps) => {
           </div>
         </div>
 
-        {/* Prism background effect */}
-        <div className="absolute -inset-4 opacity-70 group-hover:opacity-100 transition-all duration-700">
+         {/* Prism background effect - hidden on mobile */}
+         <div className={`absolute -inset-4 opacity-70 group-hover:opacity-100 transition-all duration-700 ${isMobile ? 'hidden' : ''}`}>
           <div 
             className="absolute inset-0 rounded-3xl"
             style={{
@@ -142,50 +145,16 @@ const Hero = ({ onScrollTo }: HeroProps) => {
           />
         </div>
 
-        {/* Glass Morphism Card Component or Photo Upload */}
-        {uploadedImage ? (
-          <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl group-hover:shadow-primary/30 transition-all duration-700 border border-white/10">
-            <img 
-              src={uploadedImage} 
-              alt="Profile" 
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-            />
-            {/* Glass overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-        ) : (
-          <div className="relative">
-            <GlassMorphismCard />
-            
-            {/* Upload overlay */}
-            <label className="absolute inset-0 flex items-center justify-center cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-500 bg-black/60 backdrop-blur-sm rounded-3xl">
-              <div className="text-center p-4">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <p className="text-sm text-white font-medium">
-                  Click to Upload Photo
-                </p>
-              </div>
-              <input 
-                type="file" 
-                accept="image/*" 
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-            </label>
-          </div>
-        )}
+         {/* Static Glass Morphism Card Component */}
+         <GlassMorphismCard />
 
-        {/* Floating accent elements */}
-        <div className="absolute -top-6 -right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-500 z-30">
+         {/* Floating accent elements - simplified on mobile */}
+         <div className={`absolute -top-6 -right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 z-30 ${isMobile ? '' : 'group-hover:scale-110 transition-transform duration-500'}`}>
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
           </svg>
         </div>
-        <div className="absolute -bottom-4 -left-4 w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform duration-500 z-30">
+         <div className={`absolute -bottom-4 -left-4 w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg shadow-accent/30 z-30 ${isMobile ? '' : 'group-hover:scale-110 transition-transform duration-500'}`}>
           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>

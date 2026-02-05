@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+ import { useCallback } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,21 +7,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
-import LoadingScreen from "./components/LoadingScreen";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleLoadingComplete = useCallback(() => {
-    setIsLoading(false);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
         <Toaster />
         <Sonner />
         <BrowserRouter>

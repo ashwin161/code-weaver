@@ -9,11 +9,16 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CursorGlow from "@/components/CursorGlow";
 import ParticlesBackground from "@/components/ParticlesBackground";
+ import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const lenisRef = useRef<Lenis | null>(null);
+   const isMobile = useIsMobile();
 
   useEffect(() => {
+     // Disable smooth scroll on mobile for better performance
+     if (isMobile) return;
+ 
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -32,9 +37,9 @@ const Index = () => {
     requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy();
+       lenis?.destroy();
     };
-  }, []);
+   }, [isMobile]);
 
   const scrollTo = useCallback((target: string) => {
     const element = document.getElementById(target);
@@ -45,9 +50,11 @@ const Index = () => {
 
   return (
     <>
-      <ParticlesBackground />
+       {/* Only render particles on desktop for performance */}
+       {!isMobile && <ParticlesBackground />}
       <div className="min-h-screen bg-transparent relative z-10">
-        <CursorGlow />
+         {/* Only render cursor glow on desktop */}
+         {!isMobile && <CursorGlow />}
         <Header onScrollTo={scrollTo} />
         
         <main>
