@@ -1,8 +1,10 @@
-import { useState, useRef } from "react";
+ import { useState, useRef } from "react";
+ import { useIsMobile } from "@/hooks/use-mobile";
 
 const GlassMorphismCard = () => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+   const isMobile = useIsMobile();
 
   return (
     <div 
@@ -33,9 +35,9 @@ const GlassMorphismCard = () => {
         {/* Top-right floating element - Holographic ring */}
         <div className="absolute -top-6 -right-6 z-20">
           <div className="relative w-16 h-16">
-            {/* Spinning holographic ring */}
+             {/* Holographic ring - no animation on mobile */}
             <div 
-              className="absolute inset-0 rounded-full animate-spin-slow"
+               className={`absolute inset-0 rounded-full ${isMobile ? '' : 'animate-spin-slow'}`}
               style={{
                 background: "conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--accent)), hsl(250 100% 70%), hsl(var(--primary)))",
                 padding: "2px",
@@ -44,11 +46,11 @@ const GlassMorphismCard = () => {
               <div className="w-full h-full rounded-full bg-gray-900" />
             </div>
             
-            {/* Bouncing glass core with ping */}
-            <div className="absolute inset-2 flex items-center justify-center animate-bounce-gentle">
-              <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                {/* Ping effect */}
-                <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />
+             {/* Glass core - simplified on mobile */}
+             <div className={`absolute inset-2 flex items-center justify-center ${isMobile ? '' : 'animate-bounce-gentle'}`}>
+               <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+                 {/* Ping effect - desktop only */}
+                 {!isMobile && <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />}
               </div>
             </div>
           </div>
@@ -61,6 +63,7 @@ const GlassMorphismCard = () => {
             style={{ transform: "rotate(-12deg)" }}
           >
             {/* Scanning light sweep */}
+             {!isMobile && (
             <div 
               className="absolute inset-0 opacity-60"
               style={{
@@ -68,6 +71,7 @@ const GlassMorphismCard = () => {
                 animation: "scan-sweep 2s linear infinite",
               }}
             />
+             )}
             
             {/* Data bars */}
             <div className="absolute bottom-2 left-2 right-2 flex gap-1">
