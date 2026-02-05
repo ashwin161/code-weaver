@@ -4,10 +4,10 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Mail, href: "#", label: "Email" },
+    { icon: Github, href: "https://github.com/ashwin161", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/ashwin1605", label: "LinkedIn" },
+    { icon: Twitter, href: "https://x.com/AshwinSent35383", label: "Twitter" },
+    { icon: Mail, href: "ashwin0556s@gmail.com", label: "Email" },
   ];
 
   const quickLinks = [
@@ -31,7 +31,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl font-display font-bold">YN</span>
+              <span className="text-2xl font-display font-bold">SA</span>
               <span className="text-2xl font-bold text-primary">.</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -77,7 +77,7 @@ const Footer = () => {
                 href="mailto:hello@example.com" 
                 className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm block"
               >
-                hello@example.com
+               Ashwin
               </a>
               <p className="text-muted-foreground text-sm">
                 Available for freelance projects and collaborations.

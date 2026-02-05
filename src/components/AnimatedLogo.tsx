@@ -89,8 +89,8 @@ const AnimatedLogo = ({ className = "" }: AnimatedLogoProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <span ref={letterYRef} className="inline-block">Y</span>
-      <span ref={letterNRef} className="inline-block">N</span>
+      <span ref={letterYRef} className="inline-block">S</span>
+      <span ref={letterNRef} className="inline-block">A</span>
       <span 
         ref={dotRef} 
         className="inline-block text-primary origin-center"

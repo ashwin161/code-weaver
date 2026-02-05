@@ -43,12 +43,12 @@ const AboutSection = () => {
             that blur the line between reality and imagination.
           </p>
           <p className="text-lg text-muted-foreground about-content">
-            With expertise in AR/VR, motion graphics, and interactive web development, 
-            I craft experiences that captivate users and bring brands to life.
+            AI-powered web development solutions that transform your digital presence. 
+            Leveraging cutting-edge artificial intelligence to build smarter, faster, and more intuitive websites.
           </p>
           <p className="text-lg text-muted-foreground about-content">
-            My work spans from cutting-edge WebGL experiments to polished production 
-            applications, always pushing the boundaries of what's possible on the web.
+           Building tomorrow's web experiences today with AI integration. 
+           Expert web developer specializing in intelligent automation, personalized user experiences, and AI-driven functionality.
           </p>
         </div>
 
@@ -58,19 +58,19 @@ const AboutSection = () => {
             <div className="relative glass-panel rounded-2xl p-8">
               <div className="grid grid-cols-2 gap-6 text-center">
                 <div className="space-y-2">
-                  <span className="text-4xl font-display font-bold gradient-text">5+</span>
+                  <span className="text-4xl font-display font-bold gradient-text">0</span>
                   <p className="text-sm text-muted-foreground">Years Experience</p>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-4xl font-display font-bold gradient-text">50+</span>
+                  <span className="text-4xl font-display font-bold gradient-text">0</span>
                   <p className="text-sm text-muted-foreground">Projects Completed</p>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-4xl font-display font-bold gradient-text">30+</span>
+                  <span className="text-4xl font-display font-bold gradient-text">0</span>
                   <p className="text-sm text-muted-foreground">Happy Clients</p>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-4xl font-display font-bold gradient-text">10+</span>
+                  <span className="text-4xl font-display font-bold gradient-text">0</span>
                   <p className="text-sm text-muted-foreground">Awards Won</p>
                 </div>
               </div>
